@@ -1,0 +1,35 @@
+/* Built by Duggirala for Vishnu Vardhan */
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+@theme {
+  --color-emerald: #00685f;
+  --color-orange: #e17726;
+  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-cera: "Cera Pro Medium", ui-sans-serif, system-ui, sans-serif;
+  --shadow-premium: 0 8px 30px rgb(0,0,0,0.08);
+}
+
+@layer base {
+  body {
+    @apply bg-white text-black font-sans antialiased overflow-x-hidden;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-cera uppercase tracking-tight;
+  }
+}
+
+@layer components {
+  .btn-orange {
+    @apply bg-[#e17726] text-white hover:bg-[#00685f] hover:scale-105 transition-all px-8 py-4 rounded-lg font-bold shadow-lg active:scale-95;
+  }
+
+  .navbar-z {
+    @apply z-50;
+  }
+  
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-premium rounded-2xl;
+  }
+}
