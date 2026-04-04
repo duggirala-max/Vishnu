@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useCallback, useState } from "react"
+import { useEffect, useRef, useCallback } from "react"
 import createGlobe from "cobe"
 
 interface CdnMarker {
@@ -57,24 +57,7 @@ export function GlobeCdn({
   const phiOffsetRef = useRef(0)
   const thetaOffsetRef = useRef(0)
   const isPausedRef = useRef(false)
-  const [traffic, setTraffic] = useState(() =>
-    defaultArcs.map((a, i) => ({ id: a.id, value: [420, 380, 290, 185, 156, 134][i] || 100 }))
-  )
 
-  useEffect(() => {
-    /* 
-    // Traffic logic commented out per user request
-    const interval = setInterval(() => {
-      setTraffic((data) =>
-        data.map((t) => ({
-          ...t,
-          value: Math.max(50, t.value + Math.floor(Math.random() * 21) - 10),
-        }))
-      )
-    }, 250)
-    return () => clearInterval(interval)
-    */
-  }, [])
 
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
     pointerInteracting.current = { x: e.clientX, y: e.clientY }
@@ -292,33 +275,6 @@ export function GlobeCdn({
           }}>{m.region}</span>
         </div>
       ))}
-      {/* Traffic req/s boxes commented out per user request
-      {traffic.map((t) => (
-        <div
-          key={t.id}
-          style={{
-            position: "absolute",
-            top: `var(--cobe-arc-${t.id}-y, 0px)`,
-            left: `var(--cobe-arc-${t.id}-x, 0px)`,
-            transform: "translate(-50%, -50%)",
-            fontFamily: "monospace",
-            fontSize: "0.5rem",
-            color: "#fff",
-            background: "#000",
-            padding: "3px 8px",
-            borderRadius: 4,
-            whiteSpace: "nowrap" as const,
-            pointerEvents: "none" as const,
-            opacity: `var(--cobe-visible-arc-${t.id}, var(--cobe-visible-manual-arc-${t.id}, 0))`,
-            filter: `blur(calc((1 - var(--cobe-visible-arc-${t.id}, var(--cobe-visible-manual-arc-${t.id}, 0))) * 8px))`,
-            transition: "opacity 0.3s, filter 0.3s",
-            zIndex: 10,
-          }}
-        >
-          {t.value}k req/s
-        </div>
-      ))}
-      */}
     </div>
   )
 }
