@@ -22,7 +22,7 @@
 
 @layer components {
   .btn-orange {
-    @apply bg-[#e17726] text-white hover:bg-[#00685f] hover:scale-105 transition-all px-8 py-4 rounded-lg font-bold shadow-lg active:scale-95;
+    @apply bg-[#e17726] text-white hover:bg-[#00685f] hover:scale-105 transition-all px-6 py-3 lg:px-8 lg:py-4 rounded-lg font-bold shadow-lg active:scale-95;
   }
 
   .navbar-z {
