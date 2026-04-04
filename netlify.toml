@@ -1,4 +1,6 @@
 [build]
+  base = "noor-al-reef"
+[build]
   command = "npm run build"
   publish = "dist"
 
