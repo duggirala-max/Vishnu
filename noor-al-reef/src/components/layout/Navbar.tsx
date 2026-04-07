@@ -48,7 +48,7 @@ export const Navbar = () => {
         <img 
           src="/logo.png" 
           alt="Noor Al Reef Logo" 
-          className="h-10 lg:h-20 w-auto object-contain drop-shadow-sm" 
+          className="h-10 lg:h-20 w-auto object-contain mix-blend-multiply contrast-125" 
         />
         <div className="flex flex-col -space-y-1 lg:-space-y-2">
           <div className="flex gap-1.5 items-baseline">
@@ -79,7 +79,7 @@ export const Navbar = () => {
           onClick={() => scrollToSection("contact")}
           className="bg-[#00685f] text-white px-8 py-4 rounded-full text-[11px] font-black uppercase tracking-[0.2em] shadow-xl shadow-[#00685f]/20 hover:bg-[#e17726] hover:scale-110 transition-all duration-500"
         >
-          Strategic Inquiry
+          Contact Us
         </button>
       </div>
 

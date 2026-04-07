@@ -1,5 +1,5 @@
-//Built by Duggirala for Vishnu N//
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 const products = [
   {
@@ -58,11 +58,19 @@ const products = [
 
 const FlipCard = ({ product, index }: { product: typeof products[0], index: number }) => {
   const isEmerald = index % 2 === 0;
+  const [isFlipped, setIsFlipped] = useState(false);
   
   return (
-    <div className="group h-[500px] [perspective:1000px]">
+    <div 
+      className="group h-[500px] [perspective:1000px] cursor-pointer"
+      onClick={() => setIsFlipped(!isFlipped)}
+      onMouseEnter={() => setIsFlipped(true)}
+      onMouseLeave={() => setIsFlipped(false)}
+    >
       <motion.div 
-        className="relative h-full w-full transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]"
+        className="relative h-full w-full transition-all duration-700 [transform-style:preserve-3d]"
+        animate={{ rotateY: isFlipped ? 180 : 0 }}
+        transition={{ duration: 0.7, ease: "easeInOut" }}
       >
         {/* Front Side */}
         <div className="absolute inset-0 [backface-visibility:hidden]">

@@ -4,10 +4,13 @@ import { Hero } from "./components/sections/Hero";
 import { ProductGrid } from "./components/sections/ProductGrid";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import { Mail, MessageCircle, X } from "lucide-react";
 
 function App() {
   const [contactView, setContactView] = useState<'initial' | 'choice' | 'form'>('initial');
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [showPrivacy, setShowPrivacy] = useState(false);
+  const [showTerms, setShowTerms] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -40,6 +43,36 @@ function App() {
     }
   };
 
+  const Modal = ({ title, content, isOpen, onClose }: { title: string, content: React.ReactNode, isOpen: boolean, onClose: () => void }) => (
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-6">
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+          />
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            className="relative bg-white w-full max-w-4xl max-h-[80vh] overflow-y-auto rounded-3xl shadow-2xl p-8 sm:p-12"
+          >
+            <button onClick={onClose} className="absolute top-6 right-6 p-2 hover:bg-gray-100 rounded-full transition-colors">
+              <X className="w-6 h-6 text-gray-900" />
+            </button>
+            <h2 className="text-3xl font-black text-gray-900 mb-8 uppercase tracking-tight">{title}</h2>
+            <div className="prose prose-sm max-w-none text-gray-600 space-y-6 font-medium leading-relaxed">
+              {content}
+            </div>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
+  );
+
   return (
     <AnimatePresence>
       <div id="home" className="relative min-h-screen bg-white shadow-premium overflow-x-hidden">
@@ -59,23 +92,23 @@ function App() {
               >
                 <div className="space-y-8">
                   <div className="inline-block px-4 py-2 bg-emerald/10 text-emerald rounded-full text-xs font-black uppercase tracking-widest">
-                    Corporate Integrity and Logistics
+                    Reliable Trading & Logistics
                   </div>
                   <h2 className="text-2xl sm:text-5xl lg:text-6xl font-black text-gray-900 leading-tight uppercase italic tracking-tighter">
-                    Orchestrating <span className="text-emerald">Global Supply Chains</span> with Precision
+                    Connecting <span className="text-emerald">Global Markets</span> with Ease
                   </h2>
                   <p className="text-gray-600 text-lg lg:text-xl leading-relaxed font-medium">
-                    As a primary conduit for international procurement and distribution, Noor Al Reef maintains an extensive network of commercial operations across diverse global markets. Our logistical framework ensures that every commodity under our stewardship meets the most rigorous standards of corporate integrity and operational excellence.
+                    Noor Al Reef is your trusted partner for international trading and logistics. We specialize in sourcing high-quality products and delivering them to Businesses in UAE and across the World. Our team ensures that every step of the process is handled with care and professionalism.
                   </p>
                   
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
                     <div className="p-6 bg-white shadow-premium rounded-2xl border-l-[6px] border-emerald">
-                      <h4 className="font-black text-gray-900 uppercase text-sm mb-2">Global Strategic Sourcing</h4>
-                      <p className="text-sm text-gray-600 leading-relaxed">Procuring premium commodities through a vetted network of international producers and specialized agricultural partners.</p>
+                      <h4 className="font-black text-gray-900 uppercase text-sm mb-2">Expert Sourcing</h4>
+                      <p className="text-sm text-gray-600 leading-relaxed">We find the best products from around the world to meet your specific business needs.</p>
                     </div>
                     <div className="p-6 bg-white shadow-premium rounded-2xl border-l-[6px] border-orange">
-                      <h4 className="font-black text-gray-900 uppercase text-sm mb-2">Optimized Logistics</h4>
-                      <p className="text-sm text-gray-600 leading-relaxed">Utilizing advanced warehousing facilities and strategic logistical channels to facilitate seamless pan-regional delivery.</p>
+                      <h4 className="font-black text-gray-900 uppercase text-sm mb-2">Efficient Delivery</h4>
+                      <p className="text-sm text-gray-600 leading-relaxed">Our logistics network ensures your goods arrive on time and in perfect condition.</p>
                     </div>
                   </div>
                 </div>
@@ -110,21 +143,23 @@ function App() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="bg-emerald p-8 sm:p-16 lg:p-24 rounded-[2rem] lg:rounded-[3rem] text-white shadow-2xl relative overflow-hidden text-center"
+              className="bg-gradient-to-br from-[#00685f] to-[#004d46] p-8 sm:p-16 lg:p-24 rounded-[2rem] lg:rounded-[3rem] text-white shadow-2xl relative overflow-hidden text-center border border-white/10"
             >
-              <div className="relative z-10 space-y-8">
-                <span className="text-orange font-black uppercase tracking-[0.3em] text-sm">Join the Network</span>
-                <h2 className="text-[2.5rem] sm:text-5xl lg:text-7xl font-black italic leading-none tracking-tighter">
-                  Strategic Procurement <br className="hidden md:block" /> Inquiry
-                </h2>
+              <div className="relative z-10">
+                <div className="space-y-4 mb-12 lg:mb-16">
+                  <span className="text-orange font-black uppercase tracking-[0.4em] text-xs">Get in Touch</span>
+                  <h2 className="text-[2.5rem] sm:text-5xl lg:text-7xl font-black leading-none tracking-tighter uppercase">
+                    Contact Us
+                  </h2>
+                </div>
                 
                 {contactView === 'initial' ? (
-                  <div className="pt-8">
+                  <div>
                     <button 
                       onClick={() => setContactView('choice')}
-                      className="bg-orange text-white px-12 py-6 rounded-full text-2xl font-black shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 uppercase tracking-tighter italic"
+                      className="bg-orange text-white px-10 py-5 rounded-full text-lg lg:text-xl font-black shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 uppercase tracking-[0.2em]"
                     >
-                      Initiate Strategic Inquiry
+                      Start an Inquiry
                     </button>
                   </div>
                 ) : contactView === 'choice' ? (
@@ -133,11 +168,11 @@ function App() {
                       onClick={() => setContactView('form')}
                       className="bg-white/10 hover:bg-white/20 border border-white/20 p-10 rounded-3xl transition-all group flex flex-col items-center text-center space-y-4"
                     >
-                      <div className="h-12 w-12 rounded-full bg-orange/20 flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <span className="text-orange font-black text-xl">1</span>
+                      <div className="h-16 w-16 rounded-full bg-orange/20 flex items-center justify-center group-hover:scale-110 transition-transform mb-2">
+                        <Mail className="text-orange w-8 h-8" />
                       </div>
-                      <h4 className="text-xl font-black group-hover:text-orange transition-colors uppercase tracking-tight">Professional Inquiry Form</h4>
-                      <p className="text-emerald-50 text-sm leading-relaxed">Submit your procurement requirements via our secure digital conduit for detailed assessment.</p>
+                      <h4 className="text-xl font-black group-hover:text-orange transition-colors uppercase tracking-tight">Email Us</h4>
+                      <p className="text-emerald-50 text-sm leading-relaxed">Send us your requirements for a detailed quote.</p>
                     </button>
                     <a 
                       href="https://wa.me/971545230170"
@@ -145,11 +180,11 @@ function App() {
                       rel="noopener noreferrer"
                       className="bg-white/10 hover:bg-white/20 border border-white/20 p-10 rounded-3xl transition-all group flex flex-col items-center text-center space-y-4"
                     >
-                      <div className="h-12 w-12 rounded-full bg-orange/20 flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <span className="text-orange font-black text-xl">2</span>
+                      <div className="h-16 w-16 rounded-full bg-orange/20 flex items-center justify-center group-hover:scale-110 transition-transform mb-2">
+                        <MessageCircle className="text-orange w-8 h-8" />
                       </div>
-                      <h4 className="text-xl font-black group-hover:text-orange transition-colors uppercase tracking-tight">Direct WhatsApp Liaison</h4>
-                      <p className="text-emerald-50 text-sm leading-relaxed">Connect instantly with our regional trade specialists for immediate logistical coordination.</p>
+                      <h4 className="text-xl font-black group-hover:text-orange transition-colors uppercase tracking-tight">WhatsApp</h4>
+                      <p className="text-emerald-50 text-sm leading-relaxed">Chat with us for immediate assistance.</p>
                     </a>
                   </div>
                 ) : (
@@ -184,7 +219,7 @@ function App() {
                             disabled={formStatus === 'submitting'}
                             className="flex-1 bg-orange text-white py-6 rounded-full text-xl font-black shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 disabled:opacity-50"
                           >
-                            {formStatus === 'submitting' ? 'Transmitting...' : 'Submit Strategic Inquiry'}
+                            {formStatus === 'submitting' ? 'Sending...' : 'Send Inquiry'}
                           </button>
                           <button 
                             type="button"
@@ -213,9 +248,16 @@ function App() {
         <footer className="py-12 lg:py-20 border-t border-gray-100 px-6 lg:px-8 bg-white overflow-hidden">
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10">
             <div className="flex flex-col items-center md:items-start gap-4">
-              <div className="flex items-center gap-1">
-                <span className="text-emerald font-black text-3xl tracking-tighter">NOOR</span>
-                <span className="text-orange font-black text-3xl tracking-tighter">AL REEF</span>
+              <div className="flex items-center gap-4">
+                <img 
+                  src="/logo.png" 
+                  alt="Noor Al Reef Logo" 
+                  className="h-10 lg:h-12 w-auto object-contain mix-blend-multiply contrast-125" 
+                />
+                <div className="flex gap-1">
+                  <span className="text-[#00685f] font-black text-2xl tracking-tighter">NOOR</span>
+                  <span className="text-[#e17726] font-black text-2xl tracking-tighter">AL REEF</span>
+                </div>
               </div>
               <p className="text-gray-400 text-sm font-medium">B2B General Trading Excellence.</p>
             </div>
@@ -223,16 +265,15 @@ function App() {
             <div className="text-center">
               <p className="text-gray-900 font-bold text-sm mb-2 uppercase tracking-widest">Global Operations</p>
               <p className="text-gray-500 text-sm leading-relaxed">
-                Dubai Investment Park, Phase 2 <br />
-                Dubai, United Arab Emirates
+                Office no: 404-136, NGI Building <br />
+                Port Saeed, Dubai, UAE
               </p>
             </div>
 
             <div className="flex flex-col items-center md:items-end gap-6 text-gray-500 text-xs uppercase tracking-widest font-black">
               <div className="flex gap-8">
-                <a href="#" className="hover:text-emerald transition-colors">Privacy</a>
-                <a href="#" className="hover:text-emerald transition-colors">Terms</a>
-                <a href="#" className="hover:text-emerald transition-colors">Safety</a>
+                <button onClick={() => setShowPrivacy(true)} className="hover:text-emerald transition-colors">Privacy</button>
+                <button onClick={() => setShowTerms(true)} className="hover:text-emerald transition-colors">Terms</button>
               </div>
               <p className="text-gray-400 font-normal normal-case">
                 © 2025 Noor Al Reef General Trading LLC. All Rights Reserved.
@@ -240,6 +281,43 @@ function App() {
             </div>
           </div>
         </footer>
+
+        <Modal 
+          isOpen={showPrivacy} 
+          onClose={() => setShowPrivacy(false)} 
+          title="Privacy Policy"
+          content={
+            <>
+              <p>At Noor Al Reef, we value your privacy. This policy explains how we collect and use your data in accordance with UAE Federal Decree-Law No. 45 of 2021.</p>
+              <h3 className="text-gray-900 font-bold uppercase text-sm">Data Collection</h3>
+              <p>We collect information you provide through our contact forms, such as your name, email, and business details, solely to respond to your inquiries.</p>
+              <h3 className="text-gray-900 font-bold uppercase text-sm">Data Protection</h3>
+              <p>We implement secure measures to protect your personal information from unauthorized access. We do not share your data with third parties without your consent.</p>
+              <h3 className="text-gray-900 font-bold uppercase text-sm">Your Rights</h3>
+              <p>Under UAE law, you have the right to access, correct, or request the deletion of your personal data held by us.</p>
+              <p>For any privacy concerns, please contact us through our official channels.</p>
+            </>
+          }
+        />
+
+        <Modal 
+          isOpen={showTerms} 
+          onClose={() => setShowTerms(false)} 
+          title="Terms & Conditions"
+          content={
+            <>
+              <p>By using this website, you agree to these terms. All content and services provided are subject to UAE law.</p>
+              <h3 className="text-gray-900 font-bold uppercase text-sm">Use of Website</h3>
+              <p>This website is for professional business inquiries. Users are prohibited from using the platform for any illegal activities.</p>
+              <h3 className="text-gray-900 font-bold uppercase text-sm">Intellectual Property</h3>
+              <p>All trademarks, logos, and content on this site are the property of Noor Al Reef General Trading LLC.</p>
+              <h3 className="text-gray-900 font-bold uppercase text-sm">Liability</h3>
+              <p>Noor Al Reef is not liable for any damages arising from the use of this website or reliance on the information provided herein.</p>
+              <h3 className="text-gray-900 font-bold uppercase text-sm">Dispute Resolution</h3>
+              <p>Any disputes related to these terms will be governed by the laws of the United Arab Emirates and handled by the courts of Dubai.</p>
+            </>
+          }
+        />
       </div>
     </AnimatePresence>
   );
